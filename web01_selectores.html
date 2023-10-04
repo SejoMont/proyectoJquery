@@ -1,0 +1,50 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web01 - Selectores</title>
+    <style>
+        .azul {
+            color: blue;
+        }
+    </style>
+</head>
+<!-- CONTROL + K + C -->
+<!-- DESCOMENTAR CTRL + K + U -->
+<!-- REFERENCIA A NUESTRA LIBRERIA JQUERY.JS -->
+
+<body>
+    <h1>Selectores JQuery</h1>
+    <button id="boton1">Pulsar para algo...</button>
+    <h1 class="azul">Soy azul</h1>
+    <button class="azul">Soy un boton azul</button>
+    <p>Aprendiendo JQuery 1</p>
+    <p>Aprendiendo JQuery 2</p>
+    <p>Aprendiendo JQuery 3</p>
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script>
+        // LA PRIMERA ISNTRUCCION QUE DEBEMOS INCLUIR
+        // ES CARGAR LOS COMPONENTES AL INICIAR LA PAGINA
+        $(document).ready(function () {
+            // alert("Funcionando");
+            // ocultar algun elemento
+            $("h1").hide();
+            // selector id
+            $("#boton1").hide();
+            // podemos asociar eventos
+            $(".azul").click(function () {
+                // imprescindible para el desarrollo front
+                // visualizar acciones en el exploradir web
+                console.log("Mostrando mensajes en Web...");
+                $("h1").show();
+                // Tenemos una palabra clave llamada this
+                // dicha llamada accede al objeto que ha realizado la llamada
+                $(this).hide();
+            })
+
+        })
+    </script>
+</body>
+
+</html>

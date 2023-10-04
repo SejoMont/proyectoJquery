@@ -1,0 +1,37 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web08 - Sumar Botones</title>
+</head>
+
+<body>
+    <h1>Sumar Botones</h1>
+    <div id="contBotones"></div>
+    <h1 id="result"></h1>
+
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var total = 0
+            for (let i = 1; i <= 10; i++) {
+                var boton = $("<button>", {
+                    "text": parseInt(Math.random() * 100)
+                });
+
+                $("#contBotones").append(boton);
+
+                boton.click(function () {
+                    // $("#result").text("");
+                    var num = parseInt(this.innerText);
+                    total = num + total;
+                    $("#result").text(total);
+                })
+            }
+
+        })
+    </script>
+</body>
+
+</html>

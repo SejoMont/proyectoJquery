@@ -1,0 +1,49 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web07 - Generar Imagenes</title>
+    <style>
+        img {
+            width: 150px;
+            height: 150px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Generar Imagenes</h1>
+    <label for="">Introduzca un rango: </label>
+    <input type="range" id="rango" min="1" value="1" max="50">
+    <span id="valorRango"></span>
+    <div id="contenedor"></div>
+
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#rango").change(function () {
+                var numImagenes = parseInt($(this).val());
+                $("#valorRango").text(numImagenes);
+
+                //Limpiar el contenido del parent
+                $("#contenedor").text("");
+
+                for (let i = 1; i <= numImagenes; i++) {
+                    var imagen = $("<img>", { "src": "images/knekro.jfif" });
+                    $("#contenedor").append(imagen);
+
+                    imagen.mouseover(function () {
+                        $(this).attr("src", "images/mondongo.jpg");
+                    })
+
+                    imagen.mouseout(function () {
+                        $(this).attr("src", "images/knekro.jfif");
+                    })
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web05 - Calcular Dia</title>
+</head>
+
+<body>
+    <h1>Calcular Dia</h1>
+
+    <label for="">Dia: </label>
+    <input type="text" id="dia" /> <br>
+
+    <label for="">Mes: </label>
+    <input type="text" id="mes" /> <br>
+
+    <label for="">Año: </label>
+    <input type="text" id="anio" /> <br>
+
+    <button id="botonCalcular">Calcular dia de la semana</button>
+
+    <h1 id="resultado"></h1>
+
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            // Calcular
+            $("#botonCalcular").click(function () {
+                var dia = parseInt($("#dia").val());
+                var mes = parseInt($("#mes").val());
+                var anio = parseInt($("#anio").val());
+
+                var diaSemana = ""
+
+                if (mes == 1) {
+                    mes = 13;
+                    anio = anio - 1;
+                }
+                if (mes == 2) {
+                    mes = 12;
+                    anio = anio - 1;
+                }
+
+                var op1 = parseInt(((mes + 1) * 3) / 5);
+                var op2 = parseInt(anio / 4);
+                var op3 = parseInt(anio / 100);
+                var op4 = parseInt(anio / 400);
+
+                var op5 = parseInt(dia + (mes * 2) + op1 + op2 - op3 + op4 + 2);
+
+                var op6 = parseInt(op5 / 7);
+
+                var op7 = parseInt(op5 - (op6 * 7));
+
+                switch (op7) {
+                    case 0:
+                        diaSemana = "sabado";
+                        break;
+                    case 1:
+                        diaSemana = "domingo";
+                        break;
+                    case 2:
+                        diaSemana = "lunes";
+                        break;
+                    case 3:
+                        diaSemana = "martes";
+                        break;
+                    case 4:
+                        diaSemana = "miercoles";
+                        break;
+                    case 5:
+                        diaSemana = "jueves";
+                        break;
+                    case 6:
+                        diaSemana = "viernes";
+                        break;
+                }
+
+
+                $("#resultado").text(diaSemana);
+
+            })
+        })
+    </script>
+</body>
+
+</html>

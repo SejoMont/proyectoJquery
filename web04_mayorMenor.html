@@ -1,0 +1,76 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web04 - Mayor Menor</title>
+</head>
+
+<body>
+    <h1>Mayor, Intermedio y Menor</h1>
+
+    <label for="">Numero 1: </label>
+    <input type="text" id="cajaNumero1" /> <br>
+
+    <label for="">Numero 2: </label>
+    <input type="text" id="cajaNumero2" /> <br>
+
+    <label for="">Numero 3: </label>
+    <input type="text" id="cajaNumero3" /> <br>
+
+    <button id="botonCalcular">Calcular</button>
+
+    <h1 id="resultado"></h1>
+
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            // Calcular
+            $("#botonCalcular").click(function () {
+                var n1 = parseInt($("#cajaNumero1").val());
+                var n2 = parseInt($("#cajaNumero2").val());
+                var n3 = parseInt($("#cajaNumero3").val());
+
+                // calcular mayor
+                var mayor = 0
+                var intermedio = 0
+                var menor = 0
+
+                if (n1 > n2 && n1 > n3) {
+                    mayor = n1;
+                    if (n2 > n3) {
+                        intermedio = n2;
+                        menor = n3;
+                    } else {
+                        intermedio = n3;
+                        menor = n2;
+                    }
+                } else if (n2 > n1 && n2 > n3) {
+                    mayor = n2;
+                    if (n1 > n3) {
+                        intermedio = n1;
+                        menor = n3;
+                    } else {
+                        intermedio = n3;
+                        menor = n1;
+                    }
+                } else if (n3 > n1 && n3 > n1) {
+                    mayor = n3;
+                    if (n1 > n2) {
+                        intermedio = n1;
+                        menor = n2;
+                    } else {
+                        intermedio = n2;
+                        menor = n1;
+                    }
+                }
+
+                $("#resultado").text("El mayor es: " + mayor + ", El intermedio es: " + intermedio + " y El menor es: " + menor);
+
+            })
+        })
+    </script>
+</body>
+
+</html>
