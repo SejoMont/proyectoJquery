@@ -1,0 +1,62 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web10 - Sumar Check</title>
+    <style>
+        img {
+            width: 150px;
+            height: 150px;
+        }
+        table{
+            margin: auto;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Sumar Check</h1>
+    <input type="range" id="rango" min="1" value="1" max="50">
+    <span id="valorRango"></span>
+    <table>
+        <tr id="imagenes"></tr>
+        <tr id="botones"></tr>
+    </table>
+
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#rango").change(function () {
+                var total = 0;
+                var numBtn = parseInt($(this).val());
+
+                $("#valorRango").text(numBtn);
+
+                //Limpiar el contenido del parent
+                $("#contenedor").text("");
+
+                for (let i = 1; i <= numBtn; i++) {
+
+                    var imagen = $("<img>", { "src": "images/knekro.jfif", "data-foto": i });
+                    var boton = $("<button>", { "text": "imagen" + i, "data-btn": i });
+                    
+                    $("#imagenes").append("<td>",imagen,"</td>");
+                    $("#botones").append("<td>",boton,"</td>");
+                }
+                $("button").click(function () {
+                    var imagen = $(this).data("btn");
+                    console.log(imagen)
+                    $('img').each(function () {
+                        if ($(this).data("foto") == imagen) {
+                            $(this).attr("src", "images/mondongo.jpg");
+                        }
+                    });
+                });
+            })
+        })
+    </script>
+</body>
+
+</html>

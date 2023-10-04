@@ -1,0 +1,51 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web10 - Sumar Check</title>
+</head>
+
+<body>
+    <h1>Sumar Check</h1>
+    <input type="range" id="rango" min="1" value="1" max="50">
+    <span id="valorRango"></span>
+    <h1 id="resultado"></h1>
+    <div id="contenedor"></div>
+
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#rango").change(function () {
+                var total = 0;
+                var numCbox = parseInt($(this).val());
+
+                $("#valorRango").text(numCbox);
+
+                //Limpiar el contenido del parent
+                $("#contenedor").text("");
+
+                for (let i = 1; i <= numCbox; i++) {
+                    var valorCbox = parseInt(Math.random() * 100);
+                    
+                    var cbox = $("<input>", { "type": "checkbox", "value": valorCbox });
+                    var lbl = $("<label>",{"text": valorCbox})
+                    $("#contenedor").append(cbox, lbl, "\n");
+                }
+
+                $('input[type=checkbox]').click(function () {
+                    total = 0;
+                    $(':checkbox').each(function () {
+                        if(this.checked){
+                            total = total + parseInt(this.value)
+                        }           
+                        console.log(total)
+                    });
+                    $("#resultado").text(total);
+                });        
+            })
+        })
+    </script>
+</body>
+
+</html>
