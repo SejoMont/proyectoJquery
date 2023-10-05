@@ -1,0 +1,33 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web12 - Lectura XML</title>
+</head>
+<body>
+    <h1>Lecura documento XML Empleados</h1>
+    <button id="botonEmpleados">Cargar empleados XML</button>
+    <ul id="listaEmpleados"></ul>
+
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#botonEmpleados").click(function(){
+                console.log("Antes del servicio");
+                $.get("documents/empleados.xml",function(data){
+                    console.log("leyendo servicio");
+                    var html = "";
+                    // debemos buscar todas las etiquetas <APELLIDO>
+                    $(data).find("APELLIDO").each(function(){
+                        // Como la etiqueta contiene directamente lo que necesitamos, leemos el texto de la etiqueta
+                        var apellido = $(this).text();
+                        html += "<li>"+ apellido +"</li>";
+                    })
+                    $("#listaEmpleados").html(html);
+                })
+                console.log("Después del servicio");
+            })
+        })
+    </script>
+</body>
+</html>

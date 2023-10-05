@@ -1,51 +1,79 @@
-<html lang="es">
+<!DOCTYPE html>
+
+<html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web10 - Sumar Check</title>
+    <title>Document</title>
+
 </head>
 
 <body>
-    <h1>Sumar Check</h1>
-    <input type="range" id="rango" min="1" value="1" max="50">
-    <span id="valorRango"></span>
-    <h1 id="resultado"></h1>
-    <div id="contenedor"></div>
 
+    <h1>Sumar Checkbox</h1>
+
+    <label>Seleccione número checkbox</label>
+
+    <input type="range" id="rango" value="1" min="1" max="50" />
+
+    <span id="valorrango"></span>
+
+    <h1 style="color:blue" id="resultado">0</h1>
+
+    <div id="padre"></div>
     <script src="js/jquery-3.7.1.min.js"></script>
+
     <script>
+
         $(document).ready(function () {
+
             $("#rango").change(function () {
-                var total = 0;
-                var numCbox = parseInt($(this).val());
 
-                $("#valorRango").text(numCbox);
+                var valorrango = parseInt($(this).val());
 
-                //Limpiar el contenido del parent
-                $("#contenedor").text("");
+                $("#valorrango").text(valorrango);
 
-                for (let i = 1; i <= numCbox; i++) {
-                    var valorCbox = parseInt(Math.random() * 100);
-                    
-                    var cbox = $("<input>", { "type": "checkbox", "value": valorCbox });
-                    var lbl = $("<label>",{"text": valorCbox})
-                    $("#contenedor").append(cbox, lbl, "\n");
+                $("#padre").html("");
+
+                for (var i = 1; i <= valorrango; i++) {
+
+                    var aleatorio = parseInt((Math.random() * 500)) + 1;
+
+                    var chk = $("<input>", {
+
+                        "value": aleatorio,
+
+                        "type": "checkbox"
+
+                    })
+
+                    var label = $("<label>", {
+                        "text": aleatorio
+                    })
+
+                    $("#padre").append(chk);
+                    $("#padre").append(label);
+                    chk.change(function () {
+
+                        var resultado = parseInt($("#resultado").text());
+
+                        //DEBEMOS PREGUNTAR POR EL VALOR DEL CHECKBOX 
+                        var valor = parseInt($(this).val());
+                        if ($(this).is(":checked") == true) {
+                            resultado += valor;
+                        } else {
+                            resultado -= valor;
+                        }
+                        $("#resultado").text(resultado);
+                    })
                 }
-
-                $('input[type=checkbox]').click(function () {
-                    total = 0;
-                    $(':checkbox').each(function () {
-                        if(this.checked){
-                            total = total + parseInt(this.value)
-                        }           
-                        console.log(total)
-                    });
-                    $("#resultado").text(total);
-                });        
             })
         })
+
     </script>
+
 </body>
 
 </html>

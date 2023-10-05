@@ -1,0 +1,55 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web13 - Lectura XML 2</title>
+</head>
+
+<body>
+    <h1>Departamenos Atributos XML </h1>
+    <button id="botonDepartamentos">Cargar departamentos XML</button>
+    <table id="tablaDepartamentos">
+        <thead>
+            <tr>
+                <th>Numero</th>
+                <th>Nombre</th>
+                <th>Localidad</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#botonDepartamentos").click(function () {
+                console.log("Antes del servicio");
+                $.get("documents/departamentos.xml", function (data) {
+                    console.log("Leyendo servicio");
+                    var html = "";
+                    // necesitamos recuperar cada etiqueta <dept>
+                    $(data).find("DEPT").each(function () {
+                        html += "<tr>"
+                        // para el atributo usamos .attr("ATRIBUTO")
+                        var numero = $(this).attr("DEPT_NO");
+                        var nombre = $(this).find("DNOMBRE").first().text();
+                        var localidad = $(this).find("LOC").text();
+                        
+                        html += "<td>" + numero + "</td>";
+                        html += "<td>" + nombre + "</td>";
+                        html += "<td>" + localidad + "</td>";
+
+                        html += "</tr>"
+                    })
+                    $("#tablaDepartamentos tbody").html(html);
+                })
+                console.log("Después del servicio");
+            })
+        })
+    </script>
+</body>
+
+</html>

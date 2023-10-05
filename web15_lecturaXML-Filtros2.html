@@ -1,0 +1,67 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web15 - Filtros XML 2</title>
+</head>
+
+<body>
+    <h1>Departamenos Filtros XML 2</h1>
+    <table>
+        <tr>
+            <td><label>Nota:</label></td>
+            <td><input type="text" id="cajaNota"> </td>
+            <td><button id="botonNota">Buscar Id</button></td>
+        </tr>
+    </table>
+    <hr>
+    <table id="tablaNotas">
+        <thead>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Notas</th>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+
+    <ul id="listaDepartamentos"></ul>
+    <h1 style="color: red" id="mensaje"></h1>
+
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var html = "";
+
+            $("#botonNota").click(function () {
+                html = "";
+
+                var nota = parseInt($("#cajaNota").val());
+
+                $.get("documents/alumnos.xml", function (data) {
+
+                    $(data).find("alumno").each(function () {
+                        var notaAlumno = $(this).find("nota").text();
+                        if (notaAlumno >= nota) {
+                            var nombre = $(this).find("nombre").text();
+                            var apellidos = $(this).find("apellidos").text();
+
+                            html += "<tr>"
+
+                            html += "<td>" + nombre + "</td>";
+                            html += "<td>" + apellidos + "</td>";
+                            html += "<td>" + notaAlumno + "</td>";
+
+                            html += "</tr>"
+                        }
+                    })
+                    $("#tablaNotas tbody").html(html);
+                })
+            })
+        })
+    </script>
+</body>
+
+</html>

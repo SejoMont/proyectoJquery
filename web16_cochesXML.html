@@ -1,0 +1,60 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web16 - cochesXML</title>
+</head>
+
+<body>
+    <label for="">Marca</label>
+    <select name="" id="marca"></select>
+    <h1 id="nomMarca"></h1>
+    <img src="" alt="" id="fotoCoche">
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var html = ""
+
+            $.get("documents/coches.xml", function (data) {
+                var modelos = ""
+                $(data).find("coche").each(function () {
+
+                    var marca = $(this).find("marca").text();
+                    var modelo = $(this).find("modelo").text();
+                    var idCoche = $(this).attr("idcoche");
+
+                    console.log(marca + " - " + modelo);
+                    
+                    modelos += "<option id='" + idCoche + "'>"
+                    modelos += marca + " - " + modelo
+                    modelos += "</option>"
+                })
+                $("#marca").html(modelos);
+            })
+
+            $("#marca").change(function () {
+                var id = $(this).children(":selected").attr("id");
+
+                $.get("documents/coches.xml", function (data) {
+                    console.log("Leyendo");
+                    // Filtrar por atributo DEPT[DEPT_NO=X]
+                    var filtro = "coche[idcoche=" + id + "]";
+                    console.log(filtro)
+
+                    // como el id es unico, no realizamos each
+                    var nodoCoche = $(data).find(filtro).first();
+                    var marca = $(nodoCoche).find("marca").text();
+                    var modelo = $(nodoCoche).find("modelo").text();
+                    var imagen = $(nodoCoche).find("imagen").text();
+
+                    console.log(marca)
+                    $("#nomMarca").html(marca+" - "+modelo);
+                    $("#fotoCoche").attr("src", imagen);
+                })
+            })
+        })
+    </script>
+</body>
+
+</html>
