@@ -25,7 +25,7 @@
                     var idCoche = $(this).attr("idcoche");
 
                     console.log(marca + " - " + modelo);
-                    
+
                     modelos += "<option id='" + idCoche + "'>"
                     modelos += marca + " - " + modelo
                     modelos += "</option>"
@@ -38,18 +38,17 @@
 
                 $.get("documents/coches.xml", function (data) {
                     console.log("Leyendo");
-                    // Filtrar por atributo DEPT[DEPT_NO=X]
+
                     var filtro = "coche[idcoche=" + id + "]";
                     console.log(filtro)
 
-                    // como el id es unico, no realizamos each
                     var nodoCoche = $(data).find(filtro).first();
                     var marca = $(nodoCoche).find("marca").text();
                     var modelo = $(nodoCoche).find("modelo").text();
                     var imagen = $(nodoCoche).find("imagen").text();
 
                     console.log(marca)
-                    $("#nomMarca").html(marca+" - "+modelo);
+                    $("#nomMarca").html(marca + " - " + modelo);
                     $("#fotoCoche").attr("src", imagen);
                 })
             })

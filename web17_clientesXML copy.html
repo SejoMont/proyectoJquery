@@ -1,0 +1,80 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web17 - cochesXML</title>
+    <style>
+        img {
+            width: 150px;
+            ;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 for="">Clientes</h1>
+    <div id="cajaBtn"></div>
+    <h1 id="nomCliente"></h1>
+    <ul id="listaDatos"></ul>
+    <img src="" alt="" id="imgnCliente">
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var html = ""
+
+            $.get("documents/clientes.xml", function (data) {
+                var clientes = ""
+                $(data).find("CLIENTE").each(function () {
+
+                    var nombreCliente = $(this).find("NOMBRE").text();
+                    var idCliente = $(this).attr("IDCLIENTE");
+
+                    console.log(nombreCliente);
+
+                    clientes += "<button id='" + idCliente + "'>"
+                    clientes += nombreCliente
+                    clientes += "</button>"
+                })
+
+    
+                $("#cajaBtn").html(clientes);
+
+                $("button").click(function () {
+                    var id = this.id;
+
+                    console.log("ID: " + id)
+
+                    $.get("documents/clientes.xml", function (data) {
+                        console.log("Leyendo");
+
+                        var filtro = "CLIENTE[IDCLIENTE=" + id + "]";
+                        console.log(filtro)
+
+                        var nodoCliente = $(data).find(filtro).first();
+                        var nombreCli = $(nodoCliente).find("NOMBRE").text();
+                        var dir = $(nodoCliente).find("DIRECCION").text();
+                        var email = $(nodoCliente).find("EMAIL").text();
+                        var cod = $(nodoCliente).find("CODIGOPOSTAL").text();
+                        var web = $(nodoCliente).find("PAGINAWEB").text();
+                        var imgn = $(nodoCliente).find("IMAGENCLIENTE").text();
+
+                        console.log(nombreCli);
+                        $("#nomCliente").html(nombreCli);
+                        $("#listaDatos").html(
+                            "<li>" + dir + "</li>" +
+                            "<li>" + email + "</li>" +
+                            "<li>" + cod + "</li>" +
+                            "<li>" + web + "</li>"
+                        )
+                        $("#imgnCliente").attr("src", imgn);
+                    })
+                })
+            })
+
+
+        })
+    </script>
+</body>
+
+</html>
