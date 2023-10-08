@@ -78,7 +78,7 @@
                 data: dataXML,
                 success: function () {
                     console.log("Insertado correctamente");
-                    loadDoctores();
+                    loadDoctores(especialidad);
                 }
             })
         })
@@ -102,7 +102,7 @@
                 data: dataXML,
                 success: function () {
                     console.log("Modificado correctamente");
-                    loadDoctores();
+                    loadDoctores(especialidad);
                 }
             })
         })
@@ -116,9 +116,17 @@
                 type: "DELETE",
                 success: function () {
                     console.log("Borrado correctamente");
-                    loadDoctores();
+                    loadDoctores("");
                 }
             })
+        })
+
+        $("#selectEspecialidades").change(function () {
+            var especialidadCaja = $(this).children(":selected").attr("id");
+
+            loadDoctores(especialidadCaja);
+
+
         })
 
         function getDoctoresXML(idDoctor, apellido, especialidad, idHospital, salario) {
@@ -135,60 +143,60 @@
         }
 
         function loadEspecialidades() {
-            // En cada metodo, simplemente debemos utilizar nuestro request
             var request = "api/Doctores/";
+
             $.get(urlDoctores + request, function (data) {
                 console.log("Leyendo...");
-                var html = "";
-                $(data).find("Especialidad").each(function () {
+                var modelos = "";
 
-                    var nodoDoctor = $(data).find(filtro).first();
-                    var especialidad = $(nodoCliente).find("Especialidad").text();
+                var especiladadesMarcadas = new Set(); // Conjunto para almacenar especialidades únicas
 
-                    // var idDoctor = $(this).find("IdDoctor").text();
-                    // var apellido = $(this).find("Apellido").text();
-                    // var especialidad = $(this).find("Especialidad").text();
-                    // var idHospital = $(this).find("IdHospital").text();
-                    // var salario = $(this).find("Salario").text();
+                $(data).find("Doctor").each(function () {
+                    var especialidad = $(this).find("Especialidad").text().trim();
 
-                    // html += "<tr>";
-                    // html += "<td>" + idDoctor + "</td>";
-                    // html += "<td>" + apellido + "</td>";
-                    // html += "<td>" + especialidad + "</td>";
-                    // html += "<td>" + idHospital + "</td>";
-                    // html += "<td>" + salario + "</td>";
-                    // html += "</tr>";
+                    // Verificar si la especialidad ya se ha agregado al conjunto
+                    if (!especiladadesMarcadas.has(especialidad)) {
+                        especiladadesMarcadas.add(especialidad);
 
-                })
-                $("#tablaDoctores tbody").html(html);
-            })
+                        // Crear la opción solo si es una especialidad única
+                        modelos += "<option id='" + especialidad + "'>" + especialidad + "</option>";
+                    }
+                });
+
+                $("#selectEspecialidades").html(modelos);
+            });
         }
 
-        function loadDoctores() {
-            // En cada metodo, simplemente debemos utilizar nuestro request
+        function loadDoctores(especialidadCaja) {
             var request = "api/Doctores/";
+
             $.get(urlDoctores + request, function (data) {
                 console.log("Leyendo...");
                 var html = "";
                 $(data).find("Doctor").each(function () {
-                    var idDoctor = $(this).find("IdDoctor").text();
-                    var apellido = $(this).find("Apellido").text();
                     var especialidad = $(this).find("Especialidad").text();
-                    var idHospital = $(this).find("IdHospital").text();
-                    var salario = $(this).find("Salario").text();
 
-                    html += "<tr>";
-                    html += "<td>" + idDoctor + "</td>";
-                    html += "<td>" + apellido + "</td>";
-                    html += "<td>" + especialidad + "</td>";
-                    html += "<td>" + idHospital + "</td>";
-                    html += "<td>" + salario + "</td>";
-                    html += "</tr>";
+                    if (especialidadCaja == especialidad) {
+                        var idDoctor = $(this).find("IdDoctor").text();
+                        var apellido = $(this).find("Apellido").text();
+                        var idHospital = $(this).find("IdHospital").text();
+                        var salario = $(this).find("Salario").text();
+
+                        html += "<tr>";
+                        html += "<td>" + idDoctor + "</td>";
+                        html += "<td>" + apellido + "</td>";
+                        html += "<td>" + especialidad + "</td>";
+                        html += "<td>" + idHospital + "</td>";
+                        html += "<td>" + salario + "</td>";
+                        html += "</tr>";
+
+                    }
 
                 })
                 $("#tablaDoctores tbody").html(html);
             })
         }
+
     </script>
 </body>
 
