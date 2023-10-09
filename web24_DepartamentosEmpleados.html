@@ -1,0 +1,68 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web24 - Departamentos Empleados</title>
+    <h1>Lista Departamentos</h1>
+    <ul id="listaDepartamentos"></ul>
+    <h1>Tabla empleados</h1>
+    <table id="tablaEmpleados" border="1">
+        <thead>
+            <th>idEmpleado</th>
+            <th>apellido</th>
+            <th>oficio</th>
+            <th>salario</th>
+            <th>departamento</th>
+        </thead>
+        <tbody></tbody>
+    </table>
+</head>
+
+<body>
+
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script>
+        var urlDepartamentos = "https://apicruddepartamentoscore.azurewebsites.net/";
+        var urlEmpleados = "https://apiempleadosspgs.azurewebsites.net/"
+
+        $(document).ready(function () {
+            var request = "api/Departamentos/";
+            $.getJSON(urlDepartamentos + request, function (data) {
+                $.each(data, function (index, departamento) {
+                    var boton = $("<button>", { "text": "Empleados", "val": departamento.numero });
+                    var depar = $("<li>", { "text": departamento.nombre })
+
+                    $("#listaDepartamentos").append(depar);
+                    $("#listaDepartamentos").append(boton);
+
+                    $(boton).click(function () {
+                        var id = parseInt($(this).val()); // Obtener el valor del botón
+                        console.log(id);
+                        var request = "api/Empleados";
+
+                        $.getJSON(urlEmpleados + request, function (data) {
+                            var html = "";
+                            $.each(data, function (index, empleado) {
+                                if (id == empleado.departamento) {
+                                    html += "<tr>";
+                                    html += "<td>" + empleado.idEmpleado + "</td>";
+                                    html += "<td>" + empleado.apellido + "</td>";
+                                    html += "<td>" + empleado.oficio + "</td>";
+                                    html += "<td>" + empleado.salario + "</td>";
+                                    html += "<td>" + empleado.departamento + "</td>";
+                                    html += "</tr>";
+                                }
+                            })
+                            $("#tablaEmpleados tbody").html(html);
+                        })
+                    })
+                })
+            })
+        })
+
+    </script>
+
+</body>
+
+</html>

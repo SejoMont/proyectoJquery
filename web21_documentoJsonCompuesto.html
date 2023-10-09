@@ -1,0 +1,42 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web21 - Documento JSON Compuesto</title>
+</head>
+
+<body>
+    <h1>Lectura JSON Compuesto</h1>
+    <button id="botonClientes">Leer</button>
+    <div id="capaClientes"></div>
+
+
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#botonClientes").click(function () {
+                $.ajax({
+                    "url": "documents/clientes.json",
+                    "method": "GET",
+                    "dataType": "json",
+                    success: function (data) {
+                        console.log("Leyendo servicio...");
+                        var html = "";
+                        $.each(data.clientes, function(index, cliente){
+                            var nombre = cliente.nombre;
+                            html += "<h1>"+nombre+"</h1>";
+                        })
+                        $("#capaClientes").html(html)
+                    },
+                    error: function (error) {
+                        console.log("Error: " + error
+                        )
+                    }
+                })
+            })
+        })
+    </script>
+</body>
+
+</html>

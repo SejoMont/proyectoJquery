@@ -1,0 +1,91 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web19 - CRUD Doctores 2</title>
+    <style>
+        img {
+            width: 150px;
+            ;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 for="">Empleados</h1>
+
+    <select name="" id="selectOficios"></select>
+    <br>
+    <table id="tablaEmpleados" border="1">
+        <thead>
+            <tr>
+                <th>idEmpleado</th>
+                <th>apellido</th>
+                <th>oficio</th>
+                <th>salario</th>
+                <th>director</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script>
+        var urlEmpleados = "https://apiempleadosaction.azurewebsites.net/";
+        $(document).ready(function () {
+            loadEspecialidades();
+
+            $("#selectOficios").change(function () {
+                var oficioEmpleado = $(this).val();
+                var request = "api/Empleados/";
+                console.log(oficioEmpleado)
+
+                $.get(urlEmpleados + request, function (data) {
+                    var html = "";
+                    $.each(data, function (index, empleado) {
+                        if (oficioEmpleado == empleado.oficio) {
+                            html += "<tr>";
+                            html += "<td>" + empleado.idEmpleado + "</td>";
+                            html += "<td>" + empleado.apellido + "</td>";
+                            html += "<td>" + empleado.oficio + "</td>";
+                            html += "<td>" + empleado.salario + "</td>";
+                            html += "<td>" + empleado.director + "</td>";
+                            html += "</tr>";
+                        }
+                    })
+                    $("#tablaEmpleados tbody").html(html);
+                })
+
+            })
+        })
+
+        function loadEspecialidades() {
+            var request = "api/Empleados/";
+
+            $.get(urlEmpleados + request, function (data) {
+                console.log("Leyendo...");
+                var oficios = "";
+
+                var oficiosMarcados = new Set(); // Conjunto para almacenar especialidades únicas
+
+                $.getJSON(urlEmpleados + request, function (data) {
+
+                    $.each(data, function (index, empleado) {
+                        var oficio = empleado.oficio;
+
+                        if (!oficiosMarcados.has(oficio)) {
+                            oficiosMarcados.add(oficio);
+
+                            oficios += "<option value='" + oficio + "'>" + oficio + "</option>";
+                        }
+                    })
+                    $("#selectOficios").html(oficios);
+                });
+            });
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web20 - Documento JSON Simple</title>
+</head>
+
+<body>
+    <h1>Lectura JSON Simple</h1>
+    <button id="botonLeer">Leer</button>
+    <ul id="tareas"></ul>
+
+
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#botonLeer").click(function () {
+                $.getJSON("documents/tareas.json", function (data) {
+                    console.log("Leyendo servicio");
+                    var html = "";
+                    $.each(data, function (key, value) {
+                        html += "<li> Key: "+ key + ", Value: "+ value + "</li>"
+                    })
+                    $("#tareas").html(html);
+                })
+            })
+        })
+    </script>
+</body>
+
+</html>
