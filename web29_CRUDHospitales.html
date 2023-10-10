@@ -1,0 +1,87 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web29 - CRUD Hospitales</title>
+    <link rel="stylesheet" href="css/sweetalert2.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
+                aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <a class="navbar-brand" href="web29_CRUDHospitales.html">CRUD Hospitales</a>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page"
+                            href="web29_CRUDHospitalesInsertar.html">Insertar</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li> -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <h1>CRUD Hospitales</h1>
+    <table id="tablaHospitales" class="table table-striped table-hover">
+        <thead>
+            <th>idhospital</th>
+            <th>nombre</th>
+            <th>direccion</th>
+            <th>telefono</th>
+            <th>camas</th>
+            <th>Modificar</th>
+            <th>Borrar</th>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/sweetalert2.min.js"></script>
+    <script>
+        var urlHospitales = "https://apicrudhospital.azurewebsites.net/";
+        $(document).ready(function () {
+            var request = "webresources/hospitales";
+            // Obtén la URL actual
+            var url = new URL(window.location.href);
+
+            // Obtén el valor del parámetro "id" de la URL
+            var idHospital = url.searchParams.get("id");
+
+            // Ahora, idHospital contendrá el valor pasado en la URL y puedes usarlo en la página
+            console.log("Valor de idHospital:", idHospital);
+
+            $.get(urlHospitales + request, function (data) {
+                var html = "";
+                $.each(data, function (index, hospital) {
+
+                    html += "<tr>";
+                    html += "<td>" + hospital.idhospital + "</td>";
+                    html += "<td>" + hospital.nombre + "</td>";
+                    html += "<td>" + hospital.direccion + "</td>";
+                    html += "<td>" + hospital.telefono + "</td>";
+                    html += "<td>" + hospital.camas + "</td>";
+                    html += '<td><a href="http://127.0.0.1:5500/web29_CRUDHospitalesModificar.html?' 
+                        +'id=' + hospital.idhospital + "&"
+                        +'nombre=' + hospital.nombre + "&"
+                        +'direccion=' + hospital.direccion + "&"
+                        +'telefono=' + hospital.telefono + "&"
+                        +'camas=' + hospital.camas
+                        +'">Modificar</a></td>'
+                    html += '<td><a href="http://127.0.0.1:5500/web29_CRUDHospitalesBorrar.html?id=' + hospital.idhospital + '">Borrar</a></td>'
+                    html += "</tr>";
+
+                })
+                $("#tablaHospitales tbody").html(html);
+            })
+        })
+    </script>
+</body>
+
+</html>

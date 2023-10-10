@@ -4,12 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web19 - CRUD Doctores 2</title>
-    <style>
-        img {
-            width: 150px;
-            ;
-        }
-    </style>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/sweetalert2.min.css">
 </head>
 
 <body>
@@ -21,7 +17,7 @@
     <input type="text" id="cajaIncremento">
     <button id="botonIncrementar">Incrementar salario</button>
     <hr>
-    <table id="tablaEmpleados" border="1">
+    <table id="tablaEmpleados" class="table table-striped table-hover">
         <thead>
             <tr>
                 <th>idEmpleado</th>
@@ -35,6 +31,8 @@
     </table>
 
     <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/sweetalert2.min.js"></script>
     <script>
         var urlEmpleados = "https://apiempleadosaction.azurewebsites.net/";
         $(document).ready(function () {
@@ -64,14 +62,31 @@
                 var incremento = parseInt($("#cajaIncremento").val());
                 var request = "api/empleados/IncrementarSalarioOficios/" + oficio + "/" + incremento;
 
-                $.ajax({
-                    "url": urlEmpleados + request,
-                    "type": "PUT",
-                    success: function () {
-                        console.log("Datos modificados")
+                Swal.fire({
+                    title: 'Estas seguro?',
+                    text: "No podras revertirlo!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, quiero incrementarlo!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            "url": urlEmpleados + request,
+                            "type": "PUT",
+                            success: function () {
+                                Swal.fire(
+                                    'Incrementado!',
+                                    'El salario de ' + oficio + " ha sido incrementado",
+                                    'success'
+                                )
+                            }
+                        })
+                        cargarEmpleados(oficio);
                     }
                 })
-                cargarEmpleados(oficio);
+
             })
         })
         function cargarEmpleados(oficioEmpleado) {

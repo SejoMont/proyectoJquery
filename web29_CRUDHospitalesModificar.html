@@ -1,0 +1,119 @@
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web29 - CRUD Hospitales</title>
+  <link rel="stylesheet" href="css/sweetalert2.min.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
+        aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <a class="navbar-brand" href="web29_CRUDHospitales.html">CRUD Hospitales</a>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="web29_CRUDHospitalesInsertar.html">Insertar</a>
+          </li>
+          <!-- <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li> -->
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <h1>Modificar Datos</h1>
+
+  <label for="">idHopital: </label>
+  <input type="text" id="cajaIdHospital" disabled><br>
+
+  <label for="">Nombre: </label>
+  <input type="text" id="cajaNombre"><br>
+
+  <label for="">Dirección: </label>
+  <input type="text" id="cajaDireccion"><br>
+
+  <label for="">Telefono: </label>
+  <input type="text" id="cajaTelefono"><br>
+
+  <label for="">Camas: </label>
+  <input type="text" id="cajaCamas"><br>
+
+  <button id="botonInsert">Modificar</button>
+
+
+  <script src="js/jquery-3.7.1.min.js"></script>
+  <script src="js/sweetalert2.min.js"></script>
+  <script>
+    // Obtén la URL actual
+    var url = new URL(window.location.href);
+
+    // Obtén el valor del parámetro "id" de la URL
+    var idHospital = url.searchParams.get("id");
+    var nombre = url.searchParams.get("nombre");
+    var direccion = url.searchParams.get("direccion");
+    var telefono = url.searchParams.get("telefono");
+    var camas = url.searchParams.get("camas");
+
+    $("#cajaIdHospital").val(idHospital);
+    $("#cajaNombre").val(nombre);
+    $("#cajaDireccion").val(direccion);
+    $("#cajaTelefono").val(telefono);
+    $("#cajaCamas").val(camas);
+
+    // Ahora, idHospital contendrá el valor pasado en la URL y puedes usarlo en la página
+    console.log("Valor de idHospital:", idHospital);
+
+    var urlHospitales = "https://apicrudhospital.azurewebsites.net/";
+    $(document).ready(function () {
+
+      $("#botonInsert").click(function () {
+        console.log("-")
+        var idHopital = parseInt($("#cajaIdHospital").val());
+        var nombre = $("#cajaNombre").val();
+        var direccion = $("#cajaDireccion").val();
+        var telefono = $("#cajaTelefono").val();
+        var camas = parseInt($("#cajaCamas").val());
+
+
+        var dataJson = getJsonHospital(idHopital, nombre, direccion, telefono, camas);
+
+        console.log(dataJson)
+
+        var request = "webresources/hospitales/put/";
+        $.ajax({
+          "url": urlHospitales + request,
+          "type": "PUT",
+          "contentType": "application/json",
+          "data": dataJson,
+          success: function () {
+            console.log("Insertado");
+            $(location).attr('href', "web29_CRUDHospitales.html");
+          }
+        })
+      })
+    })
+    function getJsonHospital(id, nombre, direccion, telefono, camas) {
+      var hospital = new Object();
+
+      hospital.idhospital = id;
+      hospital.nombre = nombre;
+      hospital.direccion = direccion;
+      hospital.telefono = telefono;
+      hospital.camas = camas;
+
+
+      var dataJson = JSON.stringify(hospital);
+
+      return dataJson
+    }
+  </script>
+</body>
+
+</html>
