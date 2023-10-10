@@ -28,24 +28,30 @@
       </div>
     </div>
   </nav>
-  <h1>Insertar Datos</h1>
+  <h1 class="text-center">Modificar Datos</h1>
 
-  <label for="">idHopital: </label>
-  <input type="text" id="cajaIdHospital"><br>
+  <form action="">
+    <div class="container-md">
 
-  <label for="">Nombre: </label>
-  <input type="text" id="cajaNombre"><br>
+      <label for="" class="form-label">idHopital: </label>
+      <input type="text" id="cajaIdHospital" class="form-control"><br>
 
-  <label for="">Dirección: </label>
-  <input type="text" id="cajaDireccion"><br>
+      <label for="" class="form-label">Nombre: </label>
+      <input type="text" id="cajaNombre" class="form-control"><br>
 
-  <label for="">Telefono: </label>
-  <input type="text" id="cajaTelefono"><br>
+      <label for="" class="form-label">Dirección: </label>
+      <input type="text" id="cajaDireccion" class="form-control"><br>
 
-  <label for="">Camas: </label>
-  <input type="text" id="cajaCamas"><br>
+      <label for="" class="form-label">Telefono: </label>
+      <input type="text" id="cajaTelefono" class="form-control"><br>
 
-  <button id="botonInsert">Insertar</button>
+      <label for="" class="form-label">Camas: </label>
+      <input type="text" id="cajaCamas" class="form-control"><br>
+
+      <button id="botonInsert" class="btn btn-primary">Modificar</button>
+    </div>
+
+  </form>
 
 
   <script src="js/jquery-3.7.1.min.js"></script>
@@ -75,7 +81,7 @@
           "data": dataJson,
           success: function () {
             console.log("Insertado");
-            $(location).attr('href',"web29_CRUDHospitales.html");
+
           }
         })
       })

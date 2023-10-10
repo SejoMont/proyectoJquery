@@ -28,33 +28,36 @@
       </div>
     </div>
   </nav>
-  <h1>Modificar Datos</h1>
+  <h1 class="text-center">Modificar Datos</h1>
 
-  <label for="">idHopital: </label>
-  <input type="text" id="cajaIdHospital" disabled><br>
+  <form action="">
+    <div class="container-md">
 
-  <label for="">Nombre: </label>
-  <input type="text" id="cajaNombre"><br>
+      <label for="" class="form-label">idHopital: </label>
+      <input type="text" id="cajaIdHospital" class="form-control"><br>
 
-  <label for="">Dirección: </label>
-  <input type="text" id="cajaDireccion"><br>
+      <label for="" class="form-label">Nombre: </label>
+      <input type="text" id="cajaNombre" class="form-control"><br>
 
-  <label for="">Telefono: </label>
-  <input type="text" id="cajaTelefono"><br>
+      <label for="" class="form-label">Dirección: </label>
+      <input type="text" id="cajaDireccion" class="form-control"><br>
 
-  <label for="">Camas: </label>
-  <input type="text" id="cajaCamas"><br>
+      <label for="" class="form-label">Telefono: </label>
+      <input type="text" id="cajaTelefono" class="form-control"><br>
 
-  <button id="botonInsert">Modificar</button>
+      <label for="" class="form-label">Camas: </label>
+      <input type="text" id="cajaCamas" class="form-control"><br>
 
+      <button id="botonInsert" class="btn btn-primary">Modificar</button>
+    </div>
+
+  </form>
 
   <script src="js/jquery-3.7.1.min.js"></script>
   <script src="js/sweetalert2.min.js"></script>
   <script>
-    // Obtén la URL actual
     var url = new URL(window.location.href);
 
-    // Obtén el valor del parámetro "id" de la URL
     var idHospital = url.searchParams.get("id");
     var nombre = url.searchParams.get("nombre");
     var direccion = url.searchParams.get("direccion");
@@ -67,7 +70,6 @@
     $("#cajaTelefono").val(telefono);
     $("#cajaCamas").val(camas);
 
-    // Ahora, idHospital contendrá el valor pasado en la URL y puedes usarlo en la página
     console.log("Valor de idHospital:", idHospital);
 
     var urlHospitales = "https://apicrudhospital.azurewebsites.net/";
