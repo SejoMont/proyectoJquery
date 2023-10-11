@@ -28,7 +28,7 @@
       </div>
     </div>
   </nav>
-  <h1 class="text-center">Modificar Datos</h1>
+  <h1 class="text-center">Insertar Datos</h1>
 
   <form action="">
     <div class="container-md">
@@ -48,13 +48,14 @@
       <label for="" class="form-label">Camas: </label>
       <input type="text" id="cajaCamas" class="form-control"><br>
 
-      <button id="botonInsert" class="btn btn-primary">Modificar</button>
+      <button id="botonInsert" class="btn btn-primary">Insertar</button>
     </div>
 
   </form>
 
 
   <script src="js/jquery-3.7.1.min.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/sweetalert2.min.js"></script>
   <script>
     var urlHospitales = "https://apicrudhospital.azurewebsites.net/";
@@ -81,7 +82,7 @@
           "data": dataJson,
           success: function () {
             console.log("Insertado");
-
+            $(location).attr('href', "web29_CRUDHospitales.html");
           }
         })
       })
