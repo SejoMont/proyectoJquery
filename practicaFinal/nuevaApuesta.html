@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipo</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        .fotoEquipo {
+            width: 40%;
+        }
+
+        .formulario {
+            width: 80%;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Carga el navbar desde el archivo navbar.html -->
+    <div id="navbar-container"></div>
+
+    <h1 class='text-center'>Crear Apuesta</h1>
+    <div class="formulario">
+        <form id="apuestaForm">
+            <label>Usuario: </label>
+            <input type='text' id="cajaUsuario" class="form-control" />
+            <label>Real Madrid: </label>
+            <input type='number' id="cajaRealMadrid" class="form-control" />
+            <label>Barcelona FC: </label>
+            <input type='number' id="cajaBarsa" class="form-control" />
+            <label>Fecha: </label>
+            <input type='text' id="cajaFecha" class="form-control" /> <br />
+            <div class='text-end'>
+                <button type="button" id="crearApuesta" class='btn btn-outline-success'>Crear</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Url de la API
+        var apiApuestas = "https://apiapuestas.azurewebsites.net/";
+
+        $(document).ready(function () {
+            // Carga el navbar desde el archivo navbar.html
+            $("#navbar-container").load("menu.html");
+
+            // Evento de click en el botón "Crear"
+            $("#crearApuesta").click(function () {
+                // Obtener los datos del formulario
+                var id = 0;
+                var usuario = $("#cajaUsuario").val();
+                var resultado = $("#cajaRealMadrid").val() + " - " + $("#cajaBarsa").val();
+                var fecha = $("#cajaFecha").val();
+
+                var dataJson = getJsonApuesta(id, usuario, resultado, fecha);
+
+                console.log(dataJson);
+
+                var request = "api/Apuestas";
+
+                var url = apiApuestas + request;
+                $.ajax({
+                    "url": url,
+                    "type": "POST",
+                    "contentType": "application/json",
+                    "data": dataJson,
+                    success: function () {
+                        console.log("Insertado");
+                        $(location).attr('href', "/practicaFinal/apuestas.html");
+                    }
+                });
+            });
+
+            function getJsonApuesta(id, usuario, resultado, fecha) {
+                var apuesta = new Object();
+
+                apuesta.idApuesta = id;
+                apuesta.usuario = usuario;
+                apuesta.resultado = resultado;
+                apuesta.fecha = fecha;
+
+                var dataJson = JSON.stringify(apuesta);
+
+                return dataJson;
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipo</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        .fotoEquipo {
+            width: 40%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Carga el navbar desde el archivo navbar.html -->
+    <div id="navbar-container"></div>
+
+    <div class='text-center'>
+        <ul id="detallesEquipo" class='list-group'></ul>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Url de la API
+        var apiApuestas = "https://apiapuestas.azurewebsites.net/";
+        // Obtén la URL actual
+        var url = new URL(window.location.href);
+        // Obtén el valor del parámetro "equipo" de la URL
+        var idEquipo = url.searchParams.get("equipo");
+
+        $(document).ready(function () {
+            // Carga el navbar desde el archivo navbar.html
+            $("#navbar-container").load("menu.html");
+
+            var request = "api/Jugadores/JugadoresEquipos/" + idEquipo;
+            var url = apiApuestas + request;
+
+            var html = ""
+            $.get(url, function (data) {
+                // Crear una lista con los datos del equipo
+                $.each(data, function (index, jugador) {
+                    html += '<li>' + jugador.nombre + '</li>';
+                })
+
+                $("#detallesEquipo").html(html);
+            })
+        });
+    </script>
+</body>
+
+</html>

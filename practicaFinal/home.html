@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+    <!-- Carga el navbar desde el archivo navbar.html -->
+    <div id="navbar-container"></div>
+    
+    <img src="images/logos-dazn-real-madrid-fc-barcelona_180yr4gg2o6al11krh64gbllrg.png" width="100%" />
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        $(document).ready(function () {
+            // Carga el navbar desde el archivo navbar.html
+            $("#navbar-container").load("menu.html");
+        });
+    </script>
+</body>
+</html>

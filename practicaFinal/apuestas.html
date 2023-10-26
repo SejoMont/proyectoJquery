@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipo</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        .fotoEquipo {
+            width: 40%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Carga el navbar desde el archivo navbar.html -->
+    <div id="navbar-container"></div>
+
+    <div class='text-center'>
+        <li class='list-group-item'><a class='btn btn-outline-danger' href="/practicaFinal/nuevaApuesta.html">Realizar Apuesta</a></li>
+        <table class='table table-striped' id="tablaApuestas">
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Resultado</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Url de la API
+        var apiApuestas = "https://apiapuestas.azurewebsites.net/";
+
+        $(document).ready(function () {
+            // Carga el navbar desde el archivo navbar.html
+            $("#navbar-container").load("menu.html");
+
+            var request = "api/Apuestas";
+            var url = apiApuestas + request;
+
+            var html = ""
+            $.get(url, function (data) {
+                $.each(data, function (index, apuesta) {
+                    html += '<tr val="'+apuesta.idApuesta+'">'
+                    html += '<td>' + apuesta.usuario + '</td>';
+                    html += '<td>' + apuesta.resultado + '</td>';
+                    html += '<td>' + apuesta.fecha + '</td>';
+                    html += '</tr>'
+                })
+
+                $("#tablaApuestas tbody").html(html);
+            })
+        });
+    </script>
+</body>
+
+</html>
