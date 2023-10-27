@@ -7,7 +7,7 @@
     <title>Equipo</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <style>
-        .fotoEquipo {
+        .fotoJugador {
             width: 40%;
         }
     </style>
@@ -17,9 +17,18 @@
     <!-- Carga el navbar desde el archivo navbar.html -->
     <div id="navbar-container"></div>
 
-    <div class='text-center'>
-        <ul id="detallesEquipo" class='list-group'></ul>
-    </div>
+    <NavLink to={"/equipo/" + this.props.idequipo} className="btn btn-outline-info">Volver al equipo</NavLink>
+    <table class='table table-striped text-center' id="tablaJugadores">
+        <thead>
+            <tr>
+                <th>nombre</th>
+                <th>imagen</th>
+                <th>detalles</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
@@ -43,10 +52,14 @@
             $.get(url, function (data) {
                 // Crear una lista con los datos del equipo
                 $.each(data, function (index, jugador) {
-                    html += '<li>' + jugador.nombre + '</li>';
+                    html += '<tr>'
+                    html += '<td>' + jugador.nombre + '</td>'
+                    html += '<td> <img class="fotoJugador" src="' + jugador.imagen + '"/></td>'
+                    html += "<td><a class='btn btn-outline-success' href='/practicaFinal/jugador.html?idjugador=" + jugador.idJugador + "'>Detalles</a></td>"
+                    html += '</tr>'
                 })
 
-                $("#detallesEquipo").html(html);
+                $("#tablaJugadores tbody").html(html);
             })
         });
     </script>
